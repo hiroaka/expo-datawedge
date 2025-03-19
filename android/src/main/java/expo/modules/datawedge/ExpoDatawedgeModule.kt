@@ -1,3 +1,5 @@
+DataWedge modificações para fazer funcionar
+
 package expo.modules.datawedge
 
 import android.content.BroadcastReceiver
@@ -7,6 +9,8 @@ import android.content.IntentFilter
 import android.os.Bundle
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import androidx.core.content.ContextCompat
+import  android.os.Build
 
 class ExpoDatawedgeModule : Module() {
 
@@ -66,8 +70,13 @@ class ExpoDatawedgeModule : Module() {
                 }
             }
         }
+    if (Build.VERSION.SDK_INT >= 34 && context.getApplicationInfo().targetSdkVersion >= 34) {
+        context.registerReceiver(myBroadcastReceiver, filter, ContextCompat.RECEIVER_EXPORTED)
+        }else{
+            context.registerReceiver(myBroadcastReceiver, filter)
+        }
 
-        context.registerReceiver(myBroadcastReceiver, filter)
+        
     }
 
     private fun unregisterReceiver() {
